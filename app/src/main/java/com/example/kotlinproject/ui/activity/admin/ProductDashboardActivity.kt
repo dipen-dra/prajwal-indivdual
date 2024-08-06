@@ -72,7 +72,7 @@ class ProductDashboardActivity : AppCompatActivity() {
 
         productDashboardBinding.productFloating.setOnClickListener {
             var intent = Intent(this@ProductDashboardActivity,AddProductActivity::class.java)
-
+            startActivity(intent)
         }
 
         ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0,

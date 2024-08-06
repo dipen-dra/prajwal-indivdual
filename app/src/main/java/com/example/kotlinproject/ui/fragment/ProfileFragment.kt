@@ -1,7 +1,9 @@
 package com.example.kotlinproject.ui.fragment
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,12 +21,10 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
-
 class ProfileFragment : Fragment() {
 
     lateinit var profileFragmentBinding: FragmentProfileBinding
     lateinit var authViewModel: AuthViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,34 +37,29 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var repo= AuthRepoImpl()
-        authViewModel=AuthViewModel(repo)
+        val repo = AuthRepoImpl()
+        authViewModel = AuthViewModel(repo)
 
-        var currentUser=authViewModel.getCurrentUser()
-        currentUser.let{
-            authViewModel.fetchUserData(currentUser?.uid.toString())
+        val currentUser = authViewModel.getCurrentUser()
+        currentUser?.let {
+            authViewModel.fetchUserData(currentUser.uid.toString())
         }
+
         profileFragmentBinding.editCategoryAdmin.setOnClickListener {
-            var intent = Intent(requireContext(), CategoryDashBoardActivity::class.java)
+            val intent = Intent(requireContext(), CategoryDashBoardActivity::class.java)
             startActivity(intent)
         }
+
         profileFragmentBinding.editProfileCard.setOnClickListener {
-            var intent = Intent(requireContext(), EditProfileActivity::class.java)
-            intent.putExtra("userData",authViewModel.userData.value)
-            startActivity(intent)
-
-        }
-        profileFragmentBinding.editProductAdmin.setOnClickListener{
-            var intent = Intent(requireContext(), ProductDashboardActivity::class.java)
+            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            intent.putExtra("userData", authViewModel.userData.value)
             startActivity(intent)
         }
-//        profileFragmentBinding.editCategoryAdmin.setOnClickListener {
-//            var intent = Intent(requireContext(), EditProfileActivity::class.java)
-//
-//            startActivity(intent)
-//
-//        }
 
+        profileFragmentBinding.editProductAdmin.setOnClickListener {
+            val intent = Intent(requireContext(), ProductDashboardActivity::class.java)
+            startActivity(intent)
+        }
 
         authViewModel.userData.observe(viewLifecycleOwner) { users ->
             users?.let {
@@ -78,12 +73,8 @@ class ProfileFragment : Fragment() {
                         }
 
                         override fun onError(e: Exception?) {
-                            // Check if fragment is still attached to an activity
                             if (isAdded) {
                                 Toast.makeText(requireContext(), e?.message, Toast.LENGTH_LONG).show()
-                            } else {
-                                // Handle case where fragment is not attached
-                                // For example, log the error or silently ignore it
                             }
                         }
                     })
@@ -93,20 +84,28 @@ class ProfileFragment : Fragment() {
             }
         }
 
-
         profileFragmentBinding.editLogout.setOnClickListener {
-            authViewModel.logout{
-                success,message->
-                if(success){
-                    var intent = Intent(requireContext(), LoginActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }else{
-                    Toast.makeText(requireContext(),message, Toast.LENGTH_LONG).show()
+            showLogoutDialog()
+        }
+    }
+
+    private fun showLogoutDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Do you want to logout?")
+            .setPositiveButton("Yes") { dialog, id ->
+                authViewModel.logout { success, message ->
+                    if (success) {
+                        val intent = Intent(requireContext(), LoginActivity::class.java)
+                        startActivity(intent)
+                        requireActivity().finish()
+                    } else {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
-        }
-
-
+            .setNegativeButton("No") { dialog, id ->
+                dialog.dismiss()
+            }
+        builder.create().show()
     }
 }
