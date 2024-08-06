@@ -88,7 +88,6 @@ class ProfileFragment : Fragment() {
             showLogoutDialog()
         }
     }
-
     private fun showLogoutDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setMessage("Do you want to logout?")
