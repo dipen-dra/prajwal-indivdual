@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Kotlin Project</string>
+
+    <string name="intro_title"><font color="#000000">Unveiling a World</font> \n<font color="#008b86">Toys &amp;
+    Accessories &amp; Foods</font> \nFor Your Pet</string>
+
+    <string name="intro_text">Browse the latest style from top brands\nGet personalized recommendations\nEnjoy
+        free,fast shipping</string>
+
+    <string name="intro_sign_in">Already have an account ?<font color="#008b86"> Sign In</font></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
+
+

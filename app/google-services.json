@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "754668398050",
+    "firebase_url": "https://prajwalindi-42603-default-rtdb.firebaseio.com",
+    "project_id": "prajwalindi-42603",
+    "storage_bucket": "prajwalindi-42603.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754668398050:android:eac5aca8ec11b3f85905bb",
+        "android_client_info": {
+          "package_name": "com.example.kotlinproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXy8HbK-0yNYRkJISo27sIo06tScFSULY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
